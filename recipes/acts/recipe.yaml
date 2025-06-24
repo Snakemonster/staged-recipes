@@ -10,28 +10,30 @@ source:
   git: https://github.com/acts-project/acts.git
   tag: v${{ version }}
 
-build:
-  script:
-    - cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX="${PREFIX}" -S . -B build
-    - cmake -LH build
-    - cmake --build build --parallel="${CPU_COUNT}"
-    - cmake --install build
-  number: 0
+outputs:
+  - package:
+    name: ${{ name|lower }}-core
 
-requirements:
   build:
-    - ${{ stdlib('c') }}
-    - ${{ compiler('cxx') }}
-    - cmake
-    - make
-  host:
-    - libboost-devel
-    - eigen
-
-tests:
+    script:
+      - cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX="${PREFIX}" -S . -B build
+      - cmake -LH build
+      - cmake --build build --parallel="${CPU_COUNT}"
+      - cmake --install build
+    number: 0
+  requirements:
+    build:
+      - ${{ stdlib('c') }}
+      - ${{ compiler('cxx') }}
+      - cmake
+      - make
+    host:
+      - libboost-devel
+      - eigen
+  tests:
   # Some packages might need a `test/commands` key to check CLI.
-  - script:
-    - echo "Completed build"
+    - script:
+      - echo "Completed build"
 
 about:
   homepage: https://acts.readthedocs.io/en/latest/index.html
