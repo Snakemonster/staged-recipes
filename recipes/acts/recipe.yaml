@@ -16,9 +16,15 @@ outputs:
 
     build:
       script:
-        - cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX="${PREFIX}" -S . -B build
+        - if: unix
+          then: cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} -S . -B build
+        - if: win
+          then: cmake %CMAKE_ARGS% -DCMAKE_INSTALL_PREFIX=%PREFIX% -S . -B build
         - cmake -LH build
-        - cmake --build build --parallel="${CPU_COUNT}"
+        - if: unix
+          then: cmake --build build --parallel=${CPU_COUNT}
+        - if: win
+          then: cmake --build build --parallel=%CPU_COUNT%
         - cmake --install build
       number: 0
     requirements:
