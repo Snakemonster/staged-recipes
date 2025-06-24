@@ -12,28 +12,28 @@ source:
 
 outputs:
   - package:
-    name: ${{ name|lower }}-core
+      name: ${{ name|lower }}-core
 
-  build:
-    script:
-      - cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX="${PREFIX}" -S . -B build
-      - cmake -LH build
-      - cmake --build build --parallel="${CPU_COUNT}"
-      - cmake --install build
-    number: 0
-  requirements:
     build:
-      - ${{ stdlib('c') }}
-      - ${{ compiler('cxx') }}
-      - cmake
-      - make
-    host:
-      - libboost-devel
-      - eigen
-  tests:
-  # Some packages might need a `test/commands` key to check CLI.
-    - script:
-      - echo "Completed build"
+      script:
+        - cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX="${PREFIX}" -S . -B build
+        - cmake -LH build
+        - cmake --build build --parallel="${CPU_COUNT}"
+        - cmake --install build
+      number: 0
+    requirements:
+      build:
+        - ${{ stdlib('c') }}
+        - ${{ compiler('cxx') }}
+        - cmake
+        - make
+      host:
+        - libboost-devel
+        - eigen
+    tests:
+    # Some packages might need a `test/commands` key to check CLI.
+      - script:
+        - echo "Completed build"
 
 about:
   homepage: https://acts.readthedocs.io/en/latest/index.html
