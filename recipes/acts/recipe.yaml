@@ -23,13 +23,13 @@ requirements:
     - ${{ compiler('c') }}
     - ${{ stdlib('c') }}
   host:
-    - libboost
+    - libboost-devel
     - eigen
 
-# tests:
-#   # Some packages might need a `test/commands` key to check CLI.
-#   - script:
-#     -
+tests:
+  # Some packages might need a `test/commands` key to check CLI.
+  - script:
+    - echo "Completed build"
 
 about:
   homepage: https://acts.readthedocs.io/en/latest/index.html
