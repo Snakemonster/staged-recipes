@@ -2,8 +2,8 @@ context:
   name: acts
   version: "41.1.0"
 
-package:
-  name: ${{ name|lower }}-core
+recipe:
+  name: ${{ name }}-suite
   version: ${{ version }}
 
 source:
@@ -22,6 +22,9 @@ requirements:
   build:
     - ${{ compiler('c') }}
     - ${{ stdlib('c') }}
+    - ${{ compiler('cxx') }}
+    - cmake
+    - make
   host:
     - libboost-devel
     - eigen
@@ -42,6 +45,7 @@ about:
   repository: https://github.com/acts-project/acts
 
 extra:
+  feedstock-name: acts
   recipe-maintainers:
     - Snakemonster
     - matthewfeickert
