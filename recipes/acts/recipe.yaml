@@ -19,7 +19,7 @@ outputs:
         - if: unix
           then: cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} -S . -B build
         - if: win
-          then: cmake %CMAKE_ARGS% -DCMAKE_INSTALL_PREFIX=%PREFIX% -S . -B build
+          then: cmake %CMAKE_ARGS% -S . -B build
         - cmake -LH build
         - if: unix
           then: cmake --build build --parallel=${CPU_COUNT}
