@@ -19,6 +19,8 @@ outputs:
 
     build:
       script:
+        - if: osx
+          then: export CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
         - if: unix
           then:
             - cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} -S . -B build
