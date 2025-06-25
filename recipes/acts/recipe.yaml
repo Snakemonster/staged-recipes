@@ -16,15 +16,20 @@ outputs:
 
     build:
       script:
+        - if: osx
+          then:
+            - git submodule init
+            - git submodule update
         - if: unix
-          then: cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} -S . -B build
+          then:
+            - cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} -S . -B build
+            - cmake -LH build
+            - cmake --build build --parallel=${CPU_COUNT}
         - if: win
-          then: cmake %CMAKE_ARGS% -S . -B build
-        - cmake -LH build
-        - if: unix
-          then: cmake --build build --parallel=${CPU_COUNT}
-        - if: win
-          then: cmake --build build --parallel=%CPU_COUNT%
+          then:
+            - cmake %CMAKE_ARGS% -S . -B build
+            - cmake -LH build
+            - cmake --build build --parallel=%CPU_COUNT%
         - cmake --install build
       number: 0
     requirements:
@@ -39,18 +44,17 @@ outputs:
         - libboost-devel
         - eigen
     tests:
-    # Some packages might need a `test/commands` key to check CLI.
       - script:
         - echo "Completed build"
 
 about:
-  homepage: https://acts.readthedocs.io/en/latest/index.html
+  homepage: https://acts.readthedocs.io/
   summary: 'ACTS is an experiment-independent toolkit for (charged) particle track reconstruction in (high energy) physics experiments implemented in modern C++.'
   description: |
     The ACTS project provides high-level track reconstruction modules that can be used for any tracking detector. The tracking detector geometry description is optimized for efficient navigation and fast extrapolation of tracks. Converters for several common geometry description packages are available. In addition to the algorithmic code, this project also provides an event data model for the description of track parameters and measurements.
   license: MPL-2.0
   license_file: LICENSE
-  documentation: https://acts.readthedocs.io/en/latest/index.html
+  documentation: https://acts.readthedocs.io/
   repository: https://github.com/acts-project/acts
 
 extra:
