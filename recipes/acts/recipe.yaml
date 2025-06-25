@@ -19,10 +19,6 @@ outputs:
 
     build:
       script:
-        - if: osx
-          then:
-            - git submodule init
-            - git submodule update
         - if: unix
           then:
             - cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} -S . -B build
@@ -41,8 +37,6 @@ outputs:
         - ${{ compiler('cxx') }}
         - cmake
         - make
-        - if: osx
-          then: git-lfs
       host:
         - libboost-devel
         - eigen
