@@ -9,6 +9,7 @@ recipe:
 source:
   git: https://github.com/acts-project/acts.git
   tag: v${{ version }}
+  lfs: true
 
 outputs:
   - package:
