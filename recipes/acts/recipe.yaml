@@ -9,28 +9,20 @@ recipe:
 source:
   url: https://github.com/acts-project/acts/archive/refs/tags/v${{ version }}.tar.gz
   sha256: 2cd559003d7c37c089adef0c357b7cb8dee7d2fa55f26d83ac41b3e9a2a1c22c
-  # git: https://github.com/acts-project/acts.git
-  # tag: v${{ version }}
-  # lfs: true
 
 outputs:
   - package:
       name: ${{ name|lower }}-core
 
     build:
+      skip:
+        - win
       script:
         - if: osx
           then: export CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
-        - if: unix
-          then:
-            - cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} -S . -B build
-            - cmake -LH build
-            - cmake --build build --parallel=${CPU_COUNT}
-        - if: win
-          then:
-            - cmake %CMAKE_ARGS% -S . -B build
-            - cmake -LH build
-            - cmake --build build --parallel=%CPU_COUNT%
+        - cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} -S . -B build
+        - cmake -LH build
+        - cmake --build build --parallel=${CPU_COUNT}
         - cmake --install build
       number: 0
     requirements:
