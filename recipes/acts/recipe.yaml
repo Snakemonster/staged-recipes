@@ -39,7 +39,20 @@ outputs:
         - eigen
     tests:
       - script:
-        - echo "Completed build"
+          - cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} -S ./Examples/HelloWorld -B build
+          - cmake -LH build
+          - cmake --build build --parallel=${CPU_COUNT}
+          - cmake --install build
+          - ActsExampleHelloWorld
+
+        files:
+          source:
+            - Examples/HelloWorld
+        requirements:
+          run:
+            - ${{ compiler('cxx') }}
+            - cmake
+            - make
 
 about:
   homepage: https://acts.readthedocs.io/
