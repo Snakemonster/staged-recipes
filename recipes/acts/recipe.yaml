@@ -49,7 +49,7 @@ outputs:
 
         files:
           source:
-            - Examples/HelloWorld
+            - Examples
         requirements:
           run:
             - ${{ compiler('cxx') }}
