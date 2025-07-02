@@ -55,6 +55,7 @@ outputs:
             - ${{ compiler('cxx') }}
             - cmake
             - make
+            - tbb
 
 about:
   homepage: https://acts.readthedocs.io/
