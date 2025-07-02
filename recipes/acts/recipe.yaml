@@ -41,7 +41,7 @@ outputs:
         - eigen
     tests:
       - script:
-          - cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} -S ./Examples -B build
+          - cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} -S ./Examples/HelloWorld -B build
           - cmake -LH build
           - cmake --build build --parallel=${CPU_COUNT}
           - cmake --install build
@@ -49,13 +49,12 @@ outputs:
 
         files:
           source:
-            - Examples
+            - Examples/HelloWorld
         requirements:
           run:
             - ${{ compiler('cxx') }}
             - cmake
             - make
-            - tbb
 
 about:
   homepage: https://acts.readthedocs.io/
